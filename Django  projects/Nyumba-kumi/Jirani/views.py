@@ -45,3 +45,10 @@ def create_neighbourhood(request):
         form = CreateNeighbourhoodForm()
     return render(request, 'neighbourhoods/create_neighbourhood.html', {'form':form})
 
+def join_neighbourhood(request,pk):
+    neighbourhood = get_object_or_404(Neighbourhood, id=pk)
+    user = request.user
+    user.profile.neighbourhood = neighbourhood
+    user.profile.save()
+    return redirect('neighbourhood_details', pk)
+
