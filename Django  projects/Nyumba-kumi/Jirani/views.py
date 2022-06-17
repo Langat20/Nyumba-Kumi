@@ -33,3 +33,15 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
 
+def create_neighbourhood(request):
+    if request.method == 'POST':
+        form = CreateNeighbourhoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            neighbourhood = form.save(commit=False)
+            neighbourhood.admin = request.user.profile.pk
+            neighbourhood.save()
+            return redirect('neighbourhoods')
+    else:
+        form = CreateNeighbourhoodForm()
+    return render(request, 'neighbourhoods/create_neighbourhood.html', {'form':form})
+
