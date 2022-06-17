@@ -76,3 +76,12 @@ class Business(models.Model):
         businesses = cls.objects.filter(name__icontains=search_term)
         return businesses
 
+class Alerts(models.Model):
+    name = models.CharField(max_length=60)
+    content = models.TextField()
+    date_posted = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE)
+
+    def __str__(self):
+      return self.name
