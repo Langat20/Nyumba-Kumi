@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+  <!--display messages-->
+{% if messages %}
+  {% for message in messages %}
+    <div class="container center-align">
+      <div>
+        {{ message }}
+      </div> 
+    </div>
+  {% endfor %}
+{% endif %}
+<div class="container-fluid">
+  <div class="row center-align">
+    <p>Can't find your neighbourhood?</p>
+    <button class="btn">
+      <a href="{% url 'new_neighbourhood' %}" class="white-text">Create a neighbourhood</a>
+    </button>
+  </div>
+  <div class="row center-align">
+  
+    {% for neighbourhood in neighbourhoods %}
+    <div class="col s12 m4 l3" style="padding: 0px;" >
+      <div class="card-panel hoverable" id="card">
+        <div class="card-image">
+          {% if neighbourhood.logo %}
+          <img src="{{neighbourhood.logo.url}}" alt="" class=" responsive-img">
+          {% else %}
+          <img src="/static/photos/neighbourhood.jpg" alt="" class=" responsive-img">
+          {% endif %}
+        </div>
+        <div class="card-content" style="display: flex; justify-content: space-between;">
+          <p style="padding-right: 10px;"><b>Name: </b>{{neighbourhood.name}}</p>
+          <p style="padding-right: 10px;"><b>Location: </b>{{neighbourhood.location}}</p>
+        </div>
+        <div class="card-action">
+          <button class="btn">
+            <a href="{% url 'join_neighbourhood' neighbourhood.pk %}" class="white-text">Join Neighbourhood</a>
+          </button>
+        </div>
+      </div>
+      
+    </div>
+    {% endfor %} 
+  </div> 
+ 
+</div>
+<!--footer-->
+<div class="section center" style="color: grey; position: fixed; bottom: 0%; width: 100%;">
+  <p>2022 nyumba-kumi</p>
+</div>
+
+{% endblock %}
