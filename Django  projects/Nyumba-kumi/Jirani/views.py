@@ -86,3 +86,23 @@ def neighbourhood_details(request,pk):
     }
     return render(request, 'neighbourhoods/neighbourhood_details.html', context)
   
+def create_business(request, pk):
+    if request.method == 'POST':
+        b_form = CreateBusinessForm(request.POST, request.FILES)
+        if b_form.is_valid:
+            business = b_form.save(commit=False)
+            business.owner = request.user
+            business.neighbourhood = request.user.profile.neighbourhood
+            b_form.save()
+
+            messages.success(request, f'Your business has been created successfully')
+            return redirect('neighbourhood_details',pk)
+
+    else:
+        b_form = CreateBusinessForm(instance=request.user)
+        
+
+    context = {
+      'b_form':b_form,
+    }
+    return render(request,'business/create_business.html', context)
