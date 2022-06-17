@@ -52,3 +52,10 @@ def join_neighbourhood(request,pk):
     user.profile.save()
     return redirect('neighbourhood_details', pk)
 
+def change_neighbourhood(request, pk):
+    neighbourhood = get_object_or_404(Neighbourhood, id=pk)
+    user = request.user
+    user.profile.neighbourhood = None
+    user.profile.save()
+    return redirect('neighbourhoods')
+
