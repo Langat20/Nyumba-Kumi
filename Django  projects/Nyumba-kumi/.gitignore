@@ -1,5 +1,5 @@
 virtualenv/
-djangoenve/
+djangoenv/
 .env/
 pycache/
 __pycache__/
