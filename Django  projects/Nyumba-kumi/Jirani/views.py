@@ -63,3 +63,26 @@ def neighbourhoods(request):
     neighbourhoods = Neighbourhood.objects.all()
     return render(request, 'neighbourhoods/neighbourhoods.html', {'neighbourhoods':neighbourhoods})
 
+def neighbourhood_details(request,pk):
+    neighbourhood = Neighbourhood.objects.filter(id=pk)
+    businesses = Business.objects.filter(neighbourhood=pk)
+    alerts = Alerts.objects.filter(neighbourhood=pk)
+    if request.method == 'POST':
+        form = CreateAlertForm(request.POST)
+        
+        if form.is_valid():
+            alert = form.save(commit=False)
+            alert.owner = request.user.profile
+            alert.neighbourhood = request.user.profile.neighbourhood
+            alert.save()
+            return redirect('neighbourhood_details',pk)
+    else:
+        form = CreateAlertForm()
+    context ={
+      'neighbourhood':neighbourhood,
+      'businesses': businesses,
+      'alerts': alerts,
+      'form': form,
+    }
+    return render(request, 'neighbourhoods/neighbourhood_details.html', context)
+  
