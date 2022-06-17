@@ -20,3 +20,7 @@ class CreateBusinessForm(forms.ModelForm):
         model = Business
         exclude = ['owner', 'neighbourhood']
 
+class BusinessUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        exclude = ['owner', 'neighbourhood']
