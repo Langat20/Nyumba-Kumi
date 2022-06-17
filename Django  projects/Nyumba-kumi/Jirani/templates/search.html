@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if title %}
+  <title>nyumba kumi</title>
+  {% else %}
+  <title>nyumba kumi</title>
+  {% endif %}
+   <!--favicon-->
+   <link rel="icon" type="image/x-icon" href="/static/photos/village.png">
+
+   <!--materialize stylesheets CDN-->
+   
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+   <!--custom stylesheet-->
+   <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+  {% include "navbar.html" %}
+  <!--flash messages-->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="container">
+        <div class="alert">
+          {{ message }}
+        </div> 
+      </div>
+    {% endfor %}
+  {% endif %}
+  <div class="container">
+    <div class="row center-align">
+      {% if users%}
+        <h5>Found {{ businesses|length }} with name '{{message}}'</h5>
+      {% else %}
+        <h5> Found 0 businesses with name '{{message}}'</h5>
+      {% endif %}
+    </div>
+    {% if businesses %}
+      {% for business in businesses %}
+      <div class="row">
+        {% if business.logo %}
+        <div style="display: flex; padding-left: 30px;align-items: center;">
+          <div class="card-image" style="height: 100px; width: 100px; padding: 20px;">
+            <img src="{{business.logo.url}}" alt="" class="circle responsive-img" style="height: 100%; width: 100%; object-fit: cover;">
+          </div>
+          <!--link to business owner-->
+          <a href="">
+            <p><b>{{business.name}}</b></p>
+          </a>
+        </div>
+        {% else %}
+        <!--default business logo-->
+        <div style="display: flex; padding-left: 30px;align-items: center;">
+          <div class="card-image" style="height: 100px; width: 100px; padding: 20px;">
+            <img src="" alt="" class="circle responsive-img" style="height: 100%; width: 100%; object-fit: cover;">
+          </div>
+          <a href="{% url 'user_profile' username=user.user.username %}">
+            <p><b>{{business.name}}</b></p>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+  
+  <!--footer-->
+  <div class="section center" style="color: black; position: fixed; bottom: 0%; width: 100%;">
+    <b><p>2022 nyumba-kumi</p></b>
+  </div>
+  <!--materialize scripts CDN-->
+  
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+  <script src="{% static 'js/scripts.js' %}"></script>
+  
+</body>
+</html>
+
+
+
