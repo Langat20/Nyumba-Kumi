@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <!--display messages-->
+
+{% for neighbourhood in neighbourhood %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="container center-align">
+      <div>
+        {{ message }}
+      </div> 
+    </div>
+  {% endfor %}
+{% endif %}
+<div class="container-fluid" style="margin-top: 0%;">
+  <div class="container">
+    <div class="row center-align">
+      <form id="search-site" action="{% url 'search_results' %}" method='get'>
+        <div class="input-field white-text">
+          <input placeholder="Find a business..."  id="search" type="text" class="validate" name="business">
+        </div>
+      </form>
+      <div class="row center-align">
+        <p>Moving out?</p>
+        <button class="btn"><a href="{% url 'change_neighbourhood' neighbourhood.pk %}" class="white-text">Change Neighbourhood</a></button>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="container">
+  <!--neighbourhood profile-->
+  <div class="row center-align" style="display: flex;">
+    <div class="card-image" style="height: 350px; width: 350px; padding: 20px;">
+      {% if neighbourhood.logo %}
+        <img src="{{neighbourhood.logo.url}}" alt="" class="responsive-img" style="height: 100%; width: 100%; object-fit: cover;">
+      {% else %}
+        <img src="/static/photos/neighbourhood.jpg" alt="" class="responsive-img">
+      {% endif %} 
+    </div>
+    <div>
+      <div class="row center-align" style="display: flex;">
+        <p style="padding-right: 10px;">Name: <b>{{neighbourhood.name}}</b></p>
+        <p style="padding-right: 10px;">Location: <b>{{neighbourhood.location}}</b></p>
+      </div>
+      <div class="row center-align" style="display: flex;">
+        <p style="padding-right: 10px;"><b>{{businesses|length}}</b> businesses </p>
+        <p style="padding-right: 10px;"> <b>{{alerts|length}}</b> posts </p>
+        <p style="padding-right: 10px;"> <b>{{profile|length}}</b> occupants </p>
+      </div>
+      <div class="row center-align">
+        <p>About: {{neighbourhood.description}}</p>
+        <p>Police contacts: {{neighbourhood.police_dept}}</p>
+        <p>Hospital contacts: {{neighbourhood.health_dept}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" id="header">
+  <div class="container" style="padding-top: 20px;">
+    <div class="row center-align">
+      <button class="cols12 btn">
+        <a href="{% url 'create_business' neighbourhood.pk %}" class="white-text">Create business</a>
+      </button>
+      <!-- Modal Trigger -->
+      <button data-target="modal1{{neighbourhood.id}}" class="btn modal-trigger cols12">Create Post</button>
+    </div>
+    <!-- Modal Structure -->
+    <div id="modal1{{neighbourhood.id}}" class="modal">
+      <div class="modal-content">
+        <h4>Write a post</h4>
+        <form action="" method = 'POST' class="input-field col s12" id="postform">
+          {% csrf_token %}
+          <!--render form fields as paragraph-->
+          {{ form|crispy }}
+          <button type="submit" class="col s12 waves-effect waves-light btn" form="postform">Post</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
+    <!--end modal-->
+    <div class="row"></div>
+    <!--alerts-->
+    {% endfor %} 
+  
+    <div class="row center-align">
+      <h5 class="white-text" style="font-weight: 800;">Neighbourhood Alerts</h5>
+      {% for alert in alerts %}
+      <div class="col s12 m4 l3" style="padding: 0px;" >
+        <div class="card-panel hoverable" id="card">
+          <div class="card-content">
+            <p style="padding-right: 10px;"><b>Name: </b>{{alert.name}}</p>
+          </div>
+          <div class="card-action">
+            <p style="padding-right: 10px;">{{alert.content}}</p>
+          </div>
+          <div class="grey-text" style="padding-left: 10px; padding-right: 10px;">
+            <p>Posted: {{alert.date_posted|timesince}} ago</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row center-align">
+      <h5 class="white-text" style="font-weight: 800;">Businesses</h5>
+      {% for business in businesses %}
+      <div class="col s12 m4 l3" style="padding: 0px;" >
+        <div class="card-panel hoverable" id="card">
+          <div class="card-image">
+            {% if business.logo %}
+            <img src="{{business.logo.url}}" alt="" class=" responsive-img">
+            {% else %}
+            <img src="/static/photos/business.jpg" alt="" class=" responsive-img">
+            {% endif %}
+          </div>
+          <div class="card-content" style="display: flex; justify-content: space-between;">
+            <p style="padding-right: 10px;"><b>Name: </b>{{business.name}}</p>
+          </div>
+          <div class="card-action">
+            <p>{{business.description}}</p>
+            <p>Contact us: {{business.email}}</p>
+            {% if business.owner == user %}
+              <div style="padding-left: 10px;">
+                <a href=""><i class="material-icons black-text">create</i></a>
+                <a href=""><i class="material-icons black-text">delete</i></a>
+              </div>
+            {% endif %}
+          </div>
+        </div>     
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!--footer-->
+  <div class="section center" style="color: white; width: 100%;">
+    <p>2022 nyumba-kumi</p>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
