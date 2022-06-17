@@ -15,3 +15,8 @@ class CreateAlertForm(forms.ModelForm):
         model = Alerts
         fields = ['name', 'content']
 
+class CreateBusinessForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        exclude = ['owner', 'neighbourhood']
+
