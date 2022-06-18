@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!--display messages-->
+{% if messages %}
+  {% for message in messages %}
+    <div class="container center-align">
+      <div>
+        {{ message }}
+      </div> 
+    </div>
+  {% endfor %}
+{% endif %}
+
+  <div class="container">
+    <div class="row center-align" style="display:flex; justify-content: center; align-items: center; padding-top:50px;">
+      <div class="card-image" style="height: 250px; width: 250px; padding: 40px;">
+      
+        {% if user.profile.profile_photo %}
+          <img src="{{user.profile.profile_photo.url}}" alt="" class="circle responsive-img" style="height: 100%; width: 100%; object-fit: cover;">
+        {% else %}
+          <img src="http://www.gravatar.com/avatar/?d=mp" alt="" class="circle responsive-img">
+        {% endif %}
+        
+      </div>
+      
+      <div class="row center-align">
+        <p style="padding-right: 10px;"><b>{{user.username}}</b></p>
+        <div class="row center-align" style="display: flex;">
+          <p style="padding-right: 10px;">{{user.profile.neighbourhood.name}}, <b>{{user.profile.neighbourhood.location}}</b> </p>
+        </div>
+      </div> 
+    </div>
+    <div class="row center-align">
+      {{user.profile.bio}}
+    </div>
+    <div class="row center-align" style="width: 80%;" id="login">
+      <h5>Edit your profile</h5>
+      <form action="" method = 'POST' class="input-field col s12" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!--render form fields as paragraph-->
+        {{ u_form|crispy }}
+        {{ p_form|crispy }}
+        <button type="submit" class="col s12 waves-effect waves-light btn">Update</button>
+      
+      </form>
+    </div>
+   
+  </div>
+  <!--footer-->
+  <div class="section center" style="color: #8c9395;">
+    <p>2022 nyumba-kumi</p>
+  </div>
+</div>
+{% endblock %}
