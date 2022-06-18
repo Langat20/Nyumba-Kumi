@@ -1,0 +1,3 @@
+Hello {{name}}
+
+Welcome to nyumba-kumi. Join your neighbourhood in order to stay posted on the latest news.
