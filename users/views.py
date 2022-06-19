@@ -23,7 +23,7 @@ def register(request):
         #welcome email
         recipient = EmailRecipients(name = username,email =email)
         recipient.save()
-        send_welcome_email(username,email)
+        # send_welcome_email(username,email)
         #succesful log in message
         messages.success(request, f'Your nyumba kumi account had been created successfully')
         

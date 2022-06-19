@@ -145,13 +145,6 @@ CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#email configurations
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'evanduslangat@gmail.com'
-EMAIL_HOST_PASSWORD = 'xefqtqdykkqzfozu'
-
 #redirect on log in
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
