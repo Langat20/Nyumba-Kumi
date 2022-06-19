@@ -4,7 +4,7 @@ This is a web application that allows users to be in the loop about everything h
 
 ## Screenshot
 
-<img src="static/photos/screenshot.png" >
+<img src="static/photos/Screenshot.png" >
 
 ### Dependencies
 
