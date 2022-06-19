@@ -2,6 +2,11 @@
 
 This is a web application that allows users to be in the loop about everything happening in their neighbourhood. From contact information of different handymen to meeting announcements or even alerts.
 
+## Live link
+
+https://jirani10app.herokuapp.com/
+
+
 ## Screenshot
 
 <img src="static/photos/Screenshot.png" >
@@ -53,9 +58,6 @@ Testing the application
 ```bash
 python3 manage.py test neighbourhood
 ```
-
-## Live link
-
 
 
 ## Built With
